@@ -4,8 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shop</title>
-    <link rel="stylesheet" href="/css/shop.css" />
-    <link rel="stylesheet" href="/css/style.css" />
     <!-- Font Awesome -->
     <link
       rel="stylesheet"
@@ -16,17 +14,15 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
     />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/shop.css" />
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
     <header><%- include('./components/nav.ejs') %></header>
 
     <main>
-      <div class="cart">
-        <h1><i class="fa-solid fa-cart-shopping"></i> Cart</h1>
-        <div class="cart-container"></div>
-      </div>
-
+      <%- include('./cart.ejs') %>
       <div class="container">
         <% if (products && products.length > 0) { %>
         <div class="row mt-5" id="filter-buttons">
@@ -44,22 +40,28 @@
           </div>
         </div>
 
-        <div class="row px-2 mt-4 gap-3" id="filterable-cards">
+        <div class="row mt-4" id="filterable-cards">
           <% products.forEach(product => { %>
-          <div class="col-md-4">
-            <div class="card p-0" data-category="<%= product.category %>">
+          <div
+            class="col-md-4 col-sm-6 mb-4 filter-item"
+            data-category="<%= product.category %>"
+          >
+            <div class="card p-0">
               <img src="<%= product.images[0] %>" alt="<%= product.name %>" />
               <div class="card-body">
                 <h6 class="card-title"><%= product.name %></h6>
                 <p class="card-text">
                   <%= product.price %> <i class="fa-solid fa-dollar-sign"></i>
                 </p>
-                <button onclick="addToCart(this)">add to cart</button>
+                <button onclick="addToCart(this)" data-id="<%= product._id %>">
+                  add to cart
+                </button>
               </div>
             </div>
           </div>
           <% }); %>
         </div>
+
         <% } else { %>
         <div class="row">
           <div class="col-12">
@@ -72,38 +74,67 @@
 
     <%- include('./components/footer.ejs') %>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
-      // Select relevant HTML elements
-      const filterButtons = document.querySelectorAll("#filter-buttons button");
-      const filterableCards = document.querySelectorAll(
-        "#filterable-cards .card"
-      );
+      document.addEventListener("DOMContentLoaded", function () {
+        const filterButtons = document.querySelectorAll(
+          "#filter-buttons button"
+        );
+        const filterItems = document.querySelectorAll(".filter-item");
 
-      // Function to filter cards based on filter buttons
-      const filterCards = (e) => {
-        document
-          .querySelector("#filter-buttons .active")
-          .classList.remove("active");
-        e.target.classList.add("active");
+        filterButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            const filterValue = this.dataset.filter;
 
-        filterableCards.forEach((card) => {
-          // show the card if it matches the clicked filter or show all cards if "all" filter is clicked
-          if (
-            card.dataset.category === e.target.dataset.filter ||
-            e.target.dataset.filter === "all"
-          ) {
-            return card.classList.replace("hide", "show");
-          }
-          card.classList.add("hide");
+            filterItems.forEach((item) => {
+              if (
+                filterValue === "all" ||
+                item.dataset.category === filterValue
+              ) {
+                item.classList.remove("d-none");
+                item.classList.add("d-block"); // Ensure item is displayed
+              } else {
+                item.classList.remove("d-block");
+                item.classList.add("d-none"); // Hide item
+              }
+            });
+
+            // Update active button
+            filterButtons.forEach((btn) => btn.classList.remove("active"));
+            this.classList.add("active");
+          });
         });
-      };
+      });
 
-      filterButtons.forEach((button) =>
-        button.addEventListener("click", filterCards)
-      );
     </script>
 
-    <!-- bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <script>
+    function addToCart(btn) {
+          const serviceId = btn.getAttribute("data-id");
+
+          if (typeof user !== 'undefined' && user !== null && user._id) {
+      fetch(`/user/${user._id}/cart`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ productId, productQuantity: 1  }),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        alert("Error: " + error, "red");
+      });
+    } else {
+      // Handle the case when user is not defined
+      console.log("User is not defined");
+    }
+
+  }
+  </script>
   </body>
 </html>

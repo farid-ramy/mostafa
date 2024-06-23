@@ -52,12 +52,7 @@
               </div>
               <div class="mb-3">
                 <label for="type" class="form-label">Type</label>
-                <select
-                  class="form-control"
-                  id="type"
-                  name="type"
-                  required
-                >
+                <select class="form-control" id="type" name="type" required>
                   <option value="Makeup Artist">Makeup Artist</option>
                   <option value="Flower">Flower</option>
                   <option value="Photographer">Photographer</option>
@@ -213,10 +208,14 @@
           })
             .then((response) => response.json())
             .then((data) => {
-              if (data.errMsg) showMsg(data.errMsg, "red");
-              else {
+              if (data.errMsg) {
+                showMsg(data.errMsg, "red");
+              } else {
                 showMsg("Service added successfully", "green");
-                location.reload();
+                // wait 2 seconds before reloading
+                setTimeout(function () {
+                  location.reload();
+                }, 2000);
               }
             })
             .catch((error) => {

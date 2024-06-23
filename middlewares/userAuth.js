@@ -8,7 +8,7 @@ export default (req, res, next) => {
 
   if (token) {
     jwt.verify(token, jwt_secret_phrase, (err, decodedToken) => {
-      if (decodedToken.user._id == req.params.id) next();
+      if (decodedToken.user.role == "user") next();
       else res.redirect(`/signin`);
     });
   } else res.redirect(`/signin`);

@@ -1,20 +1,30 @@
 <nav class="navbar">
+  <% if (!user) { %>
   <a href="/" class="logo">
     <img src="/img/logo-white.png" alt="Logo" />
   </a>
   <ul class="menu-links">
     <li><a href="/shop">Shop</a></li>
     <li><a href="/services">Services</a></li>
-    <li><a href="#">Halls</a></li>
     <li class="join-btn"><a href="/signIn">Join Us</a></li>
-
-    <span id="close-menu-btn" class="material-symbols-outlined"
-      ><i class="fa-solid fa-xmark"></i
-    ></span>
   </ul>
-  <span id="hamburger-btn" class="material-symbols-outlined"
-    ><i class="fa-solid fa-bars"></i
-  ></span>
+  <% } else { %>
+  <a href="/user/<%= user._id %>" class="logo">
+    <img src="/img/logo-white.png" alt="Logo" />
+  </a>
+  <ul class="menu-links">
+    <li><a href="/user/<%= user._id %>/shop">Shop</a></li>
+    <li><a href="/user/<%= user._id %>/services">Services</a></li>
+    <li><a href="/logout">Log out</a></li>
+  </ul>
+  <% } %>
+
+  <span id="close-menu-btn" class="material-symbols-outlined">
+    <i class="fa-solid fa-xmark"></i>
+  </span>
+  <span id="hamburger-btn" class="material-symbols-outlined">
+    <i class="fa-solid fa-bars"></i>
+  </span>
 </nav>
 
 <script>

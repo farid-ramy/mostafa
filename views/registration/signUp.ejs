@@ -306,8 +306,10 @@
               .then((data) => {
                 if (data.errMsg) return showMsg(data.errMsg, "red");
                 else showMsg("Account created successfully", "green");
-                
-                location.assign("/signin");
+
+                setTimeout(function () {
+                  location.assign("/signin");
+                }, 2000);
               })
               .catch((error) => {
                 showMsg("Error: " + error, "red");

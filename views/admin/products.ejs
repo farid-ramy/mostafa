@@ -244,7 +244,9 @@
               if (data.errMsg) showMsg(data.errMsg, "red");
               else {
                 showMsg("Product added successfully", "green");
-                location.reload();
+                setTimeout(function () {
+                  location.reload();
+                }, 2000);
               }
             })
             .catch((error) => {
