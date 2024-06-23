@@ -49,6 +49,8 @@ router.get("/:id/", dashboard.dashboard_get);
 
 router.get("/:id/users", users.users_get);
 router.post("/user", users.users_post);
+router.get("/:id/user/:targetId", users.user_get);
+router.put("/user/:userId", users.user_put);
 router.delete("/user/:userId", users.users_delete);
 
 router.get("/:id/products", products.products_get);

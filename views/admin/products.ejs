@@ -283,7 +283,9 @@
                 if (data.errMsg) showMsg(data.errMsg, "red");
                 else {
                   showMsg("Product removed successfully", "green");
-                  location.reload();
+                  setTimeout(() => {
+                    location.reload();
+                  }, 1000);
                 }
               })
               .catch((error) => {
