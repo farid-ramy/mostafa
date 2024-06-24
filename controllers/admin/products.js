@@ -21,6 +21,20 @@ const products_get = async (req, res) => {
   }
 };
 
+const product_get = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.productId);
+    const user = await User.findById(req.params.id);
+    res.render("admin/productDetails", {
+      title: "Product",
+      user,
+      product,
+    });
+  } catch (error) {
+    res.status(500).json({ errMsg: error.message });
+  }
+};
+
 const createProduct_post = async (req, res) => {
   const productData = req.body;
 
@@ -74,6 +88,7 @@ const deleteProductById_delete = async (req, res) => {
 
 export default {
   products_get,
+  product_get,
   createProduct_post,
   uploadImage_post,
   deleteProductById_delete,

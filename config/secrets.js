@@ -12,4 +12,6 @@ export default {
   email_pass: process.env.EMAIL_PASS,
   email_host: process.env.HOST,
   email_port: process.env.EMAIL_PORT,
+
+  open_ai_api : process.env.OPEN_AI_API,
 };

@@ -21,6 +21,20 @@ const services_get = async (req, res) => {
   }
 };
 
+const service_get = async (req, res) => {
+  try {
+    const service = await Service.findById(req.params.serviceId);
+    const user = await User.findById(req.params.id);
+    res.render("admin/serviceDetails", {
+      title: "Service",
+      user,
+      service,
+    });
+  } catch (error) {
+    res.status(500).json({ errMsg: error.message });
+  }
+};
+
 const createService_post = async (req, res) => {
   const serviceData = req.body;
 
@@ -68,14 +82,14 @@ const deleteServiceById_delete = async (req, res) => {
 
     res.status(200).json({ message: "service deleted successfully" });
   } catch (error) {
-
-    console.log(error)
+    console.log(error);
     res.status(500).json({ errMsg: error });
   }
 };
 
 export default {
   services_get,
+  service_get,
   createService_post,
   uploadImage_post,
   deleteServiceById_delete,
