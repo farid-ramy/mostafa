@@ -28,32 +28,7 @@
               </div>
               <div class="chat-box">
                 <div class="chat-desc customscroll">
-                  <ul id="chat_messages">
-                    <li class="clearfix admin_chat">
-                      <span class="chat-img">
-                        <img src="/vendors/images/chat-img2.jpg" alt="" />
-                      </span>
-                      <div class="chat-body clearfix">
-                        <p>Maybe you already have additional info?</p>
-                        <div class="chat_time">09:40PM</div>
-                      </div>
-                    </li>
-
-                    <li class="clearfix">
-                      <span class="chat-img">
-                        <img src="/img/drashraf.jpeg" alt="" />
-                      </span>
-                      <div class="chat-body clearfix">
-                        <p>
-                          We are just writing up the user stories now so will
-                          have requirements for you next week. We are just
-                          writing up the user stories now so will have
-                          requirements for you next week.
-                        </p>
-                        <div class="chat_time">09:40PM</div>
-                      </div>
-                    </li>
-                  </ul>
+                  <ul id="chat_messages"></ul>
                 </div>
                 <div class="chat-footer">
                   <form id="messageForm">
@@ -119,7 +94,7 @@
         e.preventDefault();
 
         const message = document.getElementById("message").value.trim();
-
+        document.getElementById("message").value = "";
         addMyMessage(message);
 
         fetch("/admin/chat", {
@@ -130,7 +105,8 @@
           .then((response) => response.json())
           .then((data) => {
             if (data.errMsg) {
-              showMsg(data.errMsg, "red");
+              console.log(data);
+              showMsg(data.errMsg.error.message, "red");
             } else {
               addDrAshrafMessage(data.response);
             }
@@ -139,6 +115,13 @@
             showMsg("Error: " + error, "red");
           });
       });
+    </script>
+    <script>
+      setTimeout(function () {
+        addDrAshrafMessage(
+          "Hi , I am Dr.Ashraf .. your best assistant .. how can I help you ?"
+        );
+      }, 1000);
     </script>
   </body>
 </html>

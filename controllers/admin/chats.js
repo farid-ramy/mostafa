@@ -16,14 +16,18 @@ async function main(content) {
     messages: [{ role: "system", content }],
     model: "gpt-3.5-turbo-16k",
   });
+
+  return completion;
 }
 
 const chat_post = async (req, res) => {
   const message = req.body.message;
   try {
-    // const response = await main(message);
+    const response = await main(message);
+    console.log(response);
     res.status(200).json({ response });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ errMsg: err });
   }
 };
