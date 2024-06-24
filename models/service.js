@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const serviceSchema = mongoose.Schema(
   {
-    title: {
+    name: {
       type: String,
       required: true,
     },
@@ -15,7 +15,7 @@ const serviceSchema = mongoose.Schema(
       required: true,
       min: 0,
     },
-    type: {
+    category: {
       type: String,
       required: true,
     },

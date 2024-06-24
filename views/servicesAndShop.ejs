@@ -31,10 +31,10 @@
             <button class="btn mb-2 me-1 active" data-filter="all">
               Show all
             </button>
-            <% list.reduce((acc, item) => { if (!acc.includes(item.type)) {
-            acc.push(item.type); } return acc; }, []).forEach(type => { %>
-            <button class="btn mb-2 mx-1" data-filter="<%= type %>">
-              <%= type %>
+            <% list.reduce((acc, item) => { if (!acc.includes(item.category)) {
+            acc.push(item.category); } return acc; }, []).forEach(category => { %>
+            <button class="btn mb-2 mx-1" data-filter="<%= category %>">
+              <%= category %>
             </button>
             <% }); %>
           </div>
@@ -44,7 +44,7 @@
           <% list.forEach(item => { %>
           <div
             class="col-md-4 col-sm-6 mb-4 filter-item"
-            data-type="<%= item.type %>"
+            data-type="<%= item.category %>"
           >
             <div class="card p-0">
               <img src="<%= item.images[0] %>" alt="<%= item.name %>" />

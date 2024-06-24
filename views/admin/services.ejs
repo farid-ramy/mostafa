@@ -28,13 +28,13 @@
           <div class="modal-body">
             <form id="addServiceForm">
               <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
+                <label for="name" class="form-label">Name</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="title"
-                  name="title"
-                  placeholder="Enter service title"
+                  id="name"
+                  name="name"
+                  placeholder="Enter service name"
                   required
                 />
               </div>
@@ -51,8 +51,8 @@
                 />
               </div>
               <div class="mb-3">
-                <label for="type" class="form-label">Type</label>
-                <select class="form-control" id="type" name="type" required>
+                <label for="category" class="form-label">Category</label>
+                <select class="form-control" id="category" name="category" required>
                   <option value="Makeup Artist">Makeup Artist</option>
                   <option value="Flower">Flower</option>
                   <option value="Photographer">Photographer</option>
@@ -120,10 +120,10 @@
                 <img
                   class="card-img-top"
                   src="<%= service.images[0]%>"
-                  alt="<%= service.title %>"
+                  alt="<%= service.name %>"
                 />
                 <div class="card-body">
-                  <h5 class="card-title weight-500"><%= service.title %></h5>
+                  <h5 class="card-title weight-500"><%= service.name %></h5>
                   <div class="d-flex justify-content-between">
                     <a
                       href="/admin/<%= user._id%>/service/<%= service._id%>"
@@ -180,17 +180,17 @@
           document.getElementById("add_btn").disabled = true;
 
           const formData = new FormData(event.target);
-          const title = formData.get("title");
+          const name = formData.get("name");
           const price = formData.get("price");
           const description = formData.get("description");
-          const type = formData.get("type");
+          const category = formData.get("category");
           const images = formData.getAll("images");
 
           const serviceData = {
-            title,
+            name,
             price: parseFloat(price),
             description,
-            type,
+            category,
           };
 
           const imageFiles = Array.from(images);
