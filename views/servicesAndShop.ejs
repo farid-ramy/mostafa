@@ -23,37 +23,37 @@
 
     <main>
       <%- include('./cart.ejs') %>
+
       <div class="container">
-        <% if (products && products.length > 0) { %>
+        <% if (list && list.length > 0) { %>
         <div class="row mt-5" id="filter-buttons">
           <div class="col-12">
             <button class="btn mb-2 me-1 active" data-filter="all">
               Show all
             </button>
-            <% products.reduce((acc, product) => { if
-            (!acc.includes(product.category)) { acc.push(product.category); }
-            return acc; }, []).forEach(category => { %>
-            <button class="btn mb-2 mx-1" data-filter="<%= category %>">
-              <%= category %>
+            <% list.reduce((acc, item) => { if (!acc.includes(item.type)) {
+            acc.push(item.type); } return acc; }, []).forEach(type => { %>
+            <button class="btn mb-2 mx-1" data-filter="<%= type %>">
+              <%= type %>
             </button>
             <% }); %>
           </div>
         </div>
 
-        <div class="row mt-4" id="filterable-cards">
-          <% products.forEach(product => { %>
+        <div class="row px-2 mt-4" id="filterable-cards">
+          <% list.forEach(item => { %>
           <div
             class="col-md-4 col-sm-6 mb-4 filter-item"
-            data-category="<%= product.category %>"
+            data-type="<%= item.type %>"
           >
             <div class="card p-0">
-              <img src="<%= product.images[0] %>" alt="<%= product.name %>" />
+              <img src="<%= item.images[0] %>" alt="<%= item.name %>" />
               <div class="card-body">
-                <h6 class="card-title"><%= product.name %></h6>
+                <h6 class="card-title"><%= item.name %></h6>
                 <p class="card-text">
-                  <%= product.price %> <i class="fa-solid fa-dollar-sign"></i>
+                  <%= item.price %> <i class="fa-solid fa-dollar-sign"></i>
                 </p>
-                <button onclick="addToCart(this)" data-id="<%= product._id %>">
+                <button onclick="addToCart(this)" data-id="<%= item._id %>">
                   add to cart
                 </button>
               </div>
@@ -65,7 +65,7 @@
         <% } else { %>
         <div class="row">
           <div class="col-12">
-            <p class="p-5">No products available.</p>
+            <p class="p-5">No services available.</p>
           </div>
         </div>
         <% } %>
@@ -89,10 +89,7 @@
             const filterValue = this.dataset.filter;
 
             filterItems.forEach((item) => {
-              if (
-                filterValue === "all" ||
-                item.dataset.category === filterValue
-              ) {
+              if (filterValue === "all" || item.dataset.type === filterValue) {
                 item.classList.remove("d-none");
                 item.classList.add("d-block"); // Ensure item is displayed
               } else {
@@ -107,34 +104,31 @@
           });
         });
       });
-
     </script>
-
     <script>
-    function addToCart(btn) {
-          const serviceId = btn.getAttribute("data-id");
+      function addToCart(btn) {
+        const serviceId = btn.getAttribute("data-id");
 
-          if (typeof user !== 'undefined' && user !== null && user._id) {
-      fetch(`/user/${user._id}/cart`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ productId, productQuantity: 1  }),
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        alert("Error: " + error, "red");
-      });
-    } else {
-      // Handle the case when user is not defined
-      console.log("User is not defined");
-    }
-
-  }
-  </script>
+        if (typeof user !== "undefined" && user !== null && user._id) {
+          fetch(`/user/${user._id}/cart`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ serviceId, serviceQuantity: 1 }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((error) => {
+              alert("Error: " + error, "red");
+            });
+        } else {
+          // Handle the case when user is not defined
+          console.log("User is not defined");
+        }
+      }
+    </script>
   </body>
 </html>
