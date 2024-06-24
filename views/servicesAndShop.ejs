@@ -32,7 +32,8 @@
               Show all
             </button>
             <% list.reduce((acc, item) => { if (!acc.includes(item.category)) {
-            acc.push(item.category); } return acc; }, []).forEach(category => { %>
+            acc.push(item.category); } return acc; }, []).forEach(category => {
+            %>
             <button class="btn mb-2 mx-1" data-filter="<%= category %>">
               <%= category %>
             </button>
@@ -125,8 +126,7 @@
               alert("Error: " + error, "red");
             });
         } else {
-          // Handle the case when user is not defined
-          console.log("User is not defined");
+          alert("You should log in first");
         }
       }
     </script>

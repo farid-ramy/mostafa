@@ -20,12 +20,12 @@ const services_get = async (req, res) => {
     myservices.push(data);
   }
 
-  res.render("services.ejs", {
+  res.render("servicesAndShop", {
     title: "Services",
     user,
     myproducts,
     myservices,
-    services: await Service.find(),
+    list: await Service.find(),
   });
 };
 
