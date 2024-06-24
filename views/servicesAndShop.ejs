@@ -108,25 +108,29 @@
     </script>
     <script>
       function addToCart(btn) {
-        const serviceId = btn.getAttribute("data-id");
+        const Id = btn.getAttribute("data-id");
 
-        if (typeof user !== "undefined" && user !== null && user._id) {
-          fetch(`/user/${user._id}/cart`, {
+        const x = window.location.href.split("/").length;
+
+        if (x !== 4) {
+          fetch(`/user/${window.location.href.split("/")[4]}/cart`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ serviceId, serviceQuantity: 1 }),
+            body: JSON.stringify({ Id, quantity: 1 }),
           })
             .then((response) => response.json())
             .then((data) => {
-              console.log(data);
+              if (data.errMsg) {
+                alert(data.errMsg);
+              }
             })
             .catch((error) => {
-              alert("Error: " + error, "red");
+              alert("Error: " + error);
             });
         } else {
-          alert("You should log in first");
+          alert("Should login first");
         }
       }
     </script>

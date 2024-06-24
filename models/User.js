@@ -58,7 +58,7 @@ const userSchema = new Schema(
             ref: "Product",
             required: true,
           },
-          productQuantity: {
+          quantity: {
             type: Number,
             required: true,
             min: 1,
@@ -72,7 +72,7 @@ const userSchema = new Schema(
             ref: "Service",
             required: true,
           },
-          serviceQuantity: {
+          quantity: {
             type: Number,
             required: true,
             min: 1,

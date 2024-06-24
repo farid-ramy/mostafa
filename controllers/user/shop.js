@@ -8,18 +8,6 @@ const shop_get = async (req, res) => {
   let myproducts = [];
   let myservices = [];
 
-  for (let p of user.cart.products) {
-    let data = await Product.findById(p.productId).lean();
-    data.quantity = p.productQuantity;
-    myproducts.push(data);
-  }
-
-  for (let s of user.cart.services) {
-    let data = await Service.findById(s.serviceId).lean();
-    data.quantity = s.serviceQuantity;
-    myservices.push(data);
-  }
-
   res.render("servicesAndShop", {
     title: "Shop",
     user,
