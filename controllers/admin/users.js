@@ -23,6 +23,8 @@ const user_put = async (req, res) => {
     const userId = req.params.userId;
     const updates = req.body;
 
+    const oldUser = await User.findById(userId)
+
     // Prevent password updates directly
     if (updates.password) {
       return res.status(400).json({
@@ -30,19 +32,19 @@ const user_put = async (req, res) => {
       });
     }
 
-    if (await User.findOne({ username: updates.username })) {
+    if (await User.findOne({ username: updates.username }) && oldUser.username != updates.username) {
       return res.status(400).json({
         errMsg: "Username is taken",
       });
     }
 
-    if (await User.findOne({ email: updates.email })) {
+    if (await User.findOne({ email: updates.email }) && oldUser.email != updates.email) {
       return res.status(400).json({
         errMsg: "Email is taken",
       });
     }
 
-    if (await User.findOne({ phone: updates.phone })) {
+    if (await User.findOne({ phone: updates.phone })&& oldUser.phone != updates.phone) {
       return res.status(400).json({
         errMsg: "Phone is taken",
       });
